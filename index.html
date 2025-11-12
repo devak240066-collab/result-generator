@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-g">
+  <meta charset="utf-8">
   <title>Result Generator</title>
   <style>
     :root {
@@ -167,9 +167,9 @@
     </form>
 
     <div class="note">
-      <strong>Note:</strong> <br>
+      <strong>Note:</strong> 
       - "Save" writes JSON to the <code>data/</code> folder with a timestamped filename.<br/>
-      - "Export to Excel" writes <code>data/result.xlsx</code> that you can download from the server.<br>
+      - "Export to Excel" writes <code>data/result.xlsx</code> that you can download from the server.
     </div>
   </div>
   <script>
@@ -182,16 +182,11 @@
       const btnExport = document.getElementById('btnExport');
       const btnDark = document.getElementById('btnDark');
 
-      // --- Define your backend URL ---
-      const API_BASE_URL = 'https://result-generator-back-end-1.onrender.com';
-
       function fetchPreview() {
         const csv = textarea.value;
         if (!csv.trim()) { alert('Please paste CSV data first'); return; }
         btnGenerate.disabled = true;
-        
-        // --- MODIFIED ---
-        fetch(API_BASE_URL + '/api/preview', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'csvData='+encodeURIComponent(csv) })
+        fetch('/api/preview', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'csvData='+encodeURIComponent(csv) })
           .then(r=>r.text())
           .then(html => showPreviewHtml(html))
           .catch(err=>alert('Preview error: '+err))
@@ -233,9 +228,7 @@
         btnSave.disabled = true;
         btnSave.textContent = 'Saving...';
         const body = 'csvData='+encodeURIComponent(csv);
-        
-        // --- MODIFIED ---
-        fetch(API_BASE_URL + '/api/save', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
+        fetch('/api/save', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
           .then(r=>r.json())
           .then(j=>{
             if (j.ok) {
@@ -257,9 +250,7 @@
         btnExport.disabled = true;
         btnExport.textContent = 'Exporting...';
         const body = 'csvData='+encodeURIComponent(csv);
-        
-        // --- MODIFIED ---
-        fetch(API_BASE_URL + '/api/export', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
+        fetch('/api/export', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
           .then(r=>r.json())
           .then(j=>{
             if (j.ok) {
