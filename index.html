@@ -186,7 +186,7 @@
         const csv = textarea.value;
         if (!csv.trim()) { alert('Please paste CSV data first'); return; }
         btnGenerate.disabled = true;
-        fetch('/api/preview', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'csvData='+encodeURIComponent(csv) })
+        fetch('https://result-generator-back-end-1.onrender.com/api/preview', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'csvData='+encodeURIComponent(csv) })
           .then(r=>r.text())
           .then(html => showPreviewHtml(html))
           .catch(err=>alert('Preview error: '+err))
@@ -228,7 +228,7 @@
         btnSave.disabled = true;
         btnSave.textContent = 'Saving...';
         const body = 'csvData='+encodeURIComponent(csv);
-        fetch('/api/save', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
+        fetch('https://result-generator-back-end-1.onrender.com/api/save', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
           .then(r=>r.json())
           .then(j=>{
             if (j.ok) {
@@ -250,7 +250,7 @@
         btnExport.disabled = true;
         btnExport.textContent = 'Exporting...';
         const body = 'csvData='+encodeURIComponent(csv);
-        fetch('/api/export', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
+        fetch('https://result-generator-back-end-1.onrender.com/api/export', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body })
           .then(r=>r.json())
           .then(j=>{
             if (j.ok) {
